@@ -46,5 +46,9 @@ class NetworkController(Controller):
 
 		for n in self.nodes:
 			n.move()
-			
+		
+	def figureUpdate(self, i, nodePlot):
+		self.iterate()
+		
+		return nodePlot	
 

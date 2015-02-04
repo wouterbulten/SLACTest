@@ -1,9 +1,7 @@
 import network.nodes as nodes
 import environment.world as env
 import simulation.controllers as contr
-import matplotlib
-matplotlib.use('TKAgg')#, for blit=True
-import matplotlib.pyplot as plt
+import simulation.animation as anim
 
 config = {
 	
@@ -14,23 +12,12 @@ config = {
 
 # Create a new world
 world = env.World(config['xMax'], config['yMax'])
-
 # Instantiate nodes with a random position
 nodes = [nodes.BouncingNode(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['nNodes'])]
-
+# Create a network controller, containing the world and nodes
 controller = contr.NetworkController(world, nodes)
+# Create a controller for the visualization
+animation = anim.NetworkAnimation(controller)
 
-controller.initialize()
-
-for i in range(0, 300):
-	controller.iterate()
-	
-fig = plt.figure()
-
-for n in controller.nodes:
-	x,y = zip(*n.trace)
-	plt.plot(x,y)
-
-plt.xlim(0, 100)
-plt.ylim(0, 100)
-plt.show()
+# Start
+animation.show()
