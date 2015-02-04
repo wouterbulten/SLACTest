@@ -35,7 +35,7 @@ class NetworkController(Controller):
 		#Initialize all nodes with random position and movement
 		for n in self.nodes:
 			n.setPosition(*self.world.getRandomPosition())
-			
+			n.setPrediction(50, 50)
 			r = (2 * np.random.random()) * math.pi
 			s = (2 * np.random.random()) + 0.1
 			
@@ -46,9 +46,4 @@ class NetworkController(Controller):
 
 		for n in self.nodes:
 			n.move()
-		
-	def figureUpdate(self, i, nodePlot):
-		self.iterate()
-		
-		return nodePlot	
 

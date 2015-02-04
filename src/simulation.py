@@ -16,6 +16,7 @@ world = env.World(config['xMax'], config['yMax'])
 nodes = [nodes.BouncingNode(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['nNodes'])]
 # Create a network controller, containing the world and nodes
 controller = contr.NetworkController(world, nodes)
+controller.initialize()
 # Create a controller for the visualization
 animation = anim.NetworkAnimation(controller)
 

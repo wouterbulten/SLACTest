@@ -20,11 +20,14 @@ class Node(object):
 
 		self.x = x
 		self.y = y
+		self.predX = x
+		self.predY = y
 		self.r = 0
 		self.s = 1
 		self.txPower = txPower
 		self.n = n #Signal propagation constant
 		self.trace = []
+		self.predTrace = []
 
 	@abstractmethod
 	def move(self):
@@ -34,9 +37,17 @@ class Node(object):
 		self.trace.append((x, y))
 		self.x = x
 		self.y = y
+		
+	def setPrediction(self, x, y):
+		self.predTrace.append((x, y))
+		self.predX = x
+		self.predY = y
 
 	def getPosition(self):
 		return (self.x, self.y)
+	
+	def getPredictedPosition(self):
+		return (self.predX, self.predY)
 	
 	def getSignalStrengthAtLocation(self, x, y):
 		return self.RSSI(self.getDistance(x,y))
