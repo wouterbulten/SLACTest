@@ -1,3 +1,11 @@
 # SLACTest
 
-Running on Python3
+To run the simulation:
+
+	python simulation.py
+	
+Requirements:
+
+* Matplotlib
+* Numpy
+* Python3
