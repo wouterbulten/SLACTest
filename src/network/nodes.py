@@ -7,16 +7,14 @@ from abc import ABCMeta, abstractmethod
 class Node(object):
 	"""Base Node
 
-	Attributes:
+	Arguments:
 		x: Current x position
 		y: Current y position
-		txPower: Transmitting power at 1 m
-		n: Signal propagation constant
 	"""	
 
 	__metaclass__ = ABCMeta
 
-	def __init__(self, x = 0, y = 0, txPower = -59, n = 2):
+	def __init__(self, x = 0, y = 0):
 
 		self.x = x
 		self.y = y
@@ -24,8 +22,6 @@ class Node(object):
 		self.predY = y
 		self.r = 0
 		self.s = 1
-		self.txPower = txPower
-		self.n = n #Signal propagation constant
 		self.trace = []
 		self.predTrace = []
 
@@ -44,34 +40,32 @@ class Node(object):
 		self.predY = y
 
 	def getPosition(self):
+		"""Return the position of this node"""
 		return (self.x, self.y)
 	
 	def getPredictedPosition(self):
 		return (self.predX, self.predY)
-	
-	def getSignalStrengthAtLocation(self, x, y):
-		return self.RSSI(self.getDistance(x,y))
 
 	def getDistance(self, x, y):
 		"""Get the distance between this node and a specific point"""
 		return math.sqrt(math.pow((x - self.x),2) + math.pow((y - self.y),2))
 
-	def RSSI(self, dist):
-		"""Get the RSSI strength at a given distance"""
-		return -(10 * self.n) *  math.log10(dist) + self.txPower
-
 class BouncingNode(Node):
 	""" Simple bouncing node within some box
 	
-	Attributes:
+	Arguments:
+		x: Current x position
+		y: Current y position
 		maxX: Maximum size of x coordinate
 		maxY: Maximum size of y coordinate
+
+	Movement is based on:
 		r: Rotation (radial)
 		s: Speed
 	"""	
 	
-	def __init__(self, x = 0, y = 0, maxX = 100, maxY = 100, txPower = -59, n = 2):
-		super().__init__(x, y, txPower, n)
+	def __init__(self, x = 0, y = 0, maxX = 100, maxY = 100):
+		super().__init__(x, y)
 
 		self.maxX = maxX
 		self.maxY = maxY
