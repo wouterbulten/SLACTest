@@ -13,3 +13,11 @@ class World(object):
 
 	def getRandomPosition(self):
 		return [np.random.rand() * self.dimX, np.random.rand() * self.dimY]
+	
+	def getBoundingBox(self):
+		return (self.dimX, self.dimY)
+	
+	def getMaxX(self):
+		return self.dimX
+	def getMaxY(self):
+		return self.dimY
