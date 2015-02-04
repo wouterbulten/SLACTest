@@ -1,5 +1,5 @@
 import network.nodes as nodes
-import environment.world as world
+import environment.world as env
 
 config = {
 	
@@ -9,11 +9,9 @@ config = {
 }
 
 # Create a new world
-world = world.World(config['xMax'], config['yMax'])
+world = env.World(config['xMax'], config['yMax'])
 
 # Instantiate nodes with a random position
 nodes = [nodes.Node(*world.getRandomPosition()) for x in range(0, config['nNodes'])]
 
-print nodes[0]._x
-print nodes[0]._y
-print [node.getSignalStrengthAtLocation(50,50) for node in nodes]
+print([node.getSignalStrengthAtLocation(50,50) for node in nodes])

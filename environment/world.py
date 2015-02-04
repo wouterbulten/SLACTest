@@ -4,12 +4,12 @@
 
 import numpy as np
 
-class World:
+class World(object):
 
 	def __init__(self, dimX, dimY):
 
-		self._dimX = dimX
-		self._dimY = dimY
+		self.dimX = dimX
+		self.dimY = dimY
 
 	def getRandomPosition(self):
-		return [np.random.rand() * self._dimX, np.random.rand() * self._dimY]
+		return [np.random.rand() * self.dimX, np.random.rand() * self.dimY]
