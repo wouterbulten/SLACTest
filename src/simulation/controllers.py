@@ -1,6 +1,8 @@
 """
 @author Wouter Bulten
 """
+import numpy as np
+import math
 
 class Controller(object):
 
@@ -28,10 +30,21 @@ class NetworkController(Controller):
 		self.world = world
 		self.nodes = nodes
 
+	def initialize(self):
+		
+		#Initialize all nodes with random position and movement
+		for n in self.nodes:
+			n.setPosition(*self.world.getRandomPosition())
+			
+			r = (2 * np.random.random()) * math.pi
+			s = (2 * np.random.random()) + 0.1
+			
+			n.setMotion(r, s)
+		
 	def iterate(self):
 		super().iterate()
 
 		for n in self.nodes:
-			x,y = n.calculateStep()
+			n.move()
 			
 

@@ -16,25 +16,28 @@ class Node(object):
 
 	__metaclass__ = ABCMeta
 
-	def __init__(self, x, y, maxX, maxY, txPower = -59, n = 2):
+	def __init__(self, x = 0, y = 0, txPower = -59, n = 2):
 
 		self.x = x
 		self.y = y
-		self.maxX = maxX
-		self.maxY = maxY
 		self.r = 0
 		self.s = 1
 		self.txPower = txPower
 		self.n = n #Signal propagation constant
+		self.trace = []
 
 	@abstractmethod
 	def move(self):
 		pass
 
 	def setPosition(self, x, y):
+		self.trace.append((x, y))
 		self.x = x
 		self.y = y
 
+	def getPosition(self):
+		return (self.x, self.y)
+	
 	def getSignalStrengthAtLocation(self, x, y):
 		return self.RSSI(self.getDistance(x,y))
 
@@ -56,7 +59,7 @@ class BouncingNode(Node):
 		s: Speed
 	"""	
 	
-	def __init__(self, x, y, maxX, maxY, txPower = -59, n = 2):
+	def __init__(self, x = 0, y = 0, maxX = 100, maxY = 100, txPower = -59, n = 2):
 		super().__init__(x, y, txPower, n)
 
 		self.maxX = maxX
@@ -69,26 +72,13 @@ class BouncingNode(Node):
 		self.s = speed
 
 	def move(self):
-		xn = self.x + math.cos(self.r) * self.s
-		yn = self.y + math.sin(self.r) * self.s
+		xn = max(min(self.x + math.cos(self.r) * self.s, self.maxX), 0)
+		yn = max(min(self.y + math.sin(self.r) * self.s, self.maxY), 0)
 		
-		if xn > self.maxX:
-			xn = self.maxX;
-			bounce = True;
-		if yn > self.maxY:
-			yn = self.maxY
-			bounce = True;
-		if xn < 0:
-			xn = 0;
-			bounce = True;
-		if yn < 0:
-			yn = 0	
-			bounce = True;
-		
-		if bounce:
-			if self.r >= math.pi:
-				self.r -= math.pi
-			else:
-				self.r += math.pi
+		if xn == 0 or xn == self.maxX:
+			#self.r -= math.pi
+			self.r = math.pi - self.r
+		elif yn == 0 or yn == self.maxY:
+			self.r = 2 * math.pi - self.r
 		
 		self.setPosition(xn, yn)
