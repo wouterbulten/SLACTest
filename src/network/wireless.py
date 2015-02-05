@@ -8,10 +8,14 @@ from network.nodes import Node, BouncingNode
 from abc import ABCMeta, abstractmethod
 import numpy as  np
 
-def RSSI(dist, n, txPower):
+def RSSIraw(dist, n, txPower):
     """Get the RSSI strength at a given distance"""
     return -(10 * n) *  math.log10(dist) + txPower
-    
+
+def RSSI(dist, n, txPower, sd = 1):
+    """RSSI with gaussian noise N(0,sd)"""
+    return RSSIraw(dist, n, txPower) + np.random.normal(0, n)
+
 def plotAccessPoint(node, xDim, yDim, precission):
     """Plot the signal strength of an access point"""
     from mpl_toolkits.mplot3d import Axes3D  # @UnresolvedImport
@@ -27,7 +31,7 @@ def plotAccessPoint(node, xDim, yDim, precission):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     
-    ax.plot_surface(X, Y, Z, rstride=2, cstride=2, cmap=cm.coolwarm,
+    ax.plot_surface(X, Y, Z, rstride=2, cstride=2, cmap=cm.coolwarm,  # @UndefinedVariable
             linewidth=0, antialiased=True)
     
     plt.show()
