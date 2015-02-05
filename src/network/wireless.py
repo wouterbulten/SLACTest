@@ -6,18 +6,37 @@ Created on Feb 4, 2015
 import math
 from network.nodes import Node, BouncingNode
 from abc import ABCMeta, abstractmethod
+import numpy as  np
 
-def RSSI(self, dist, n, txPower):
+def RSSI(dist, n, txPower):
     """Get the RSSI strength at a given distance"""
     return -(10 * n) *  math.log10(dist) + txPower
+    
+def plotAccessPoint(node, xDim, yDim, precission):
+    """Plot the signal strength of an access point"""
+    from mpl_toolkits.mplot3d import Axes3D  # @UnresolvedImport
+    from mpl_toolkits.mplot3d import axes3d  # @UnresolvedImport
+    from matplotlib import cm
+    import matplotlib.pyplot as plt
+    
+    X = np.linspace(0, xDim, precission)
+    Y = np.linspace(0, yDim, precission)
+    Z = np.array([node.getSignalStrengthAtLocation(x,y) for x in X for y in Y]).reshape(precission, precission)
+    X,Y = np.meshgrid(X,Y, indexing='ij')
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    
+    ax.plot_surface(X, Y, Z, rstride=2, cstride=2, cmap=cm.coolwarm,
+            linewidth=0, antialiased=True)
+    
+    plt.show()
     
 class WirelessEntity(metaclass=ABCMeta):
     """
     Wireless entity
     
     Arguments:
-        x: Current x position
-        y: Current y position
         txPower: Transmitting power at 1 m
         n: Signal propagation constant
     """
@@ -50,7 +69,7 @@ class FixedAP(WirelessEntity, Node):
         pass
     
     def getDistance(self, x, y):
-        Node.getDistance(self, x, y)  
+        return Node.getDistance(self, x, y)  
         
 class MovingAP(WirelessEntity, BouncingNode):
     """ Moving access point
@@ -64,4 +83,4 @@ class MovingAP(WirelessEntity, BouncingNode):
         BouncingNode.__init__(self, maxX, maxY)
         
     def getDistance(self, x, y):
-        BouncingNode.getDistance(self, x, y)
+        return BouncingNode.getDistance(self, x, y)
