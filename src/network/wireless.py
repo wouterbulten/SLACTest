@@ -35,6 +35,23 @@ class WirelessEntity(metaclass=ABCMeta):
         """Return the signal strength of this node at a particular position"""
         return RSSI(self.getDistance(x,y), self.n, self.txPower)
 
+class FixedAP(WirelessEntity, Node):
+    """ Non-moving access point
+    
+    Builds upon a fixed node and on WirelessEntity
+    for functionality regarding signal strength and such.
+    """
+    
+    def __init__(self, maxX, maxY, txPower = -59, n = 2):
+        WirelessEntity.__init__(self, txPower, n)
+        Node.__init__(self)
+        
+    def iterate(self):
+        pass
+    
+    def getDistance(self, x, y):
+        Node.getDistance(self, x, y)  
+        
 class MovingAP(WirelessEntity, BouncingNode):
     """ Moving access point
     

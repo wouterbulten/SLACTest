@@ -2,9 +2,10 @@
 @author Wouter Bulten
 """
 import math
+import numpy as np
 from abc import ABCMeta, abstractmethod
 
-class Node(object):
+class Node(object, metaclass=ABCMeta):
 	"""Base Node
 
 	Arguments:
@@ -16,7 +17,15 @@ class Node(object):
 		
 		self.x = x
 		self.y = y
-		self.trace = []
+
+	def initialize(self, x, y):
+		"""Reset the state of the node"""
+		self.x = x
+		self.y = y
+		
+	@abstractmethod
+	def iterate(self):
+		pass
 
 	def getPosition(self):
 		"""Return the position of this node"""
@@ -80,6 +89,18 @@ class BouncingNode(MovingNode):
 		self.r = angle
 		self.s = speed
 
+	def initialize(self, x, y):
+		"""Set random movement"""
+		super().initialize(x, y)
+		
+		r = (2 * np.random.random()) * math.pi
+		s = (2 * np.random.random()) + 0.1
+			
+		self.setMotion(r, s)
+		
+	def iterate(self):
+		self.move()
+		
 	def move(self):
 		xn = max(min(self.x + math.cos(self.r) * self.s, self.maxX), 0)
 		yn = max(min(self.y + math.sin(self.r) * self.s, self.maxY), 0)

@@ -5,7 +5,8 @@ import simulation.animation as anim
 
 config = {
 	
-	'nNodes':	50,
+	'movingNodes':	25,
+	'fixedNodes':	25,
 	'xMax':		100,
 	'yMax':		100,
 }
@@ -13,7 +14,9 @@ config = {
 # Create a new world
 world = env.World(config['xMax'], config['yMax'])
 # Instantiate nodes with a random position
-nodes = [wsn.MovingAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['nNodes'])]
+nodes = [wsn.MovingAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['movingNodes'])]
+nodes.extend([wsn.FixedAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['fixedNodes'])])
+
 # Create a network controller, containing the world and nodes
 controller = contr.NetworkController(world, nodes)
 # Initialize the world, gives nodes initial speed and direction

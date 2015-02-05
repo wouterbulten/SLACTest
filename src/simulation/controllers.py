@@ -34,16 +34,11 @@ class NetworkController(Controller):
 		
 		#Initialize all nodes with random position and movement
 		for n in self.nodes:
-			n.setPosition(*self.world.getRandomPosition())
-			
-			r = (2 * np.random.random()) * math.pi
-			s = (2 * np.random.random()) + 0.1
-			
-			n.setMotion(r, s)
+			n.initialize(*self.world.getRandomPosition())
 		
 	def iterate(self):
 		super().iterate()
 
 		for n in self.nodes:
-			n.move()
+			n.iterate()
 
