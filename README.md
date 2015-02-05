@@ -8,4 +8,7 @@ Requirements:
 
 * Matplotlib
 * Numpy
-* Python3
+* Scipy
+* Python 3 (tested with 3.4)
+
+Uses GP-LVM (Guassian Process Latent Variable Models) for localization.
