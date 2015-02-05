@@ -12,45 +12,49 @@ class Node(object):
 		y: Current y position
 	"""	
 
-	__metaclass__ = ABCMeta
-
 	def __init__(self, x = 0, y = 0):
-
-		self.x = x
-		self.y = y
-		self.predX = x
-		self.predY = y
-		self.r = 0
-		self.s = 1
-		self.trace = []
-		self.predTrace = []
-
-	@abstractmethod
-	def move(self):
-		pass
-
-	def setPosition(self, x, y):
-		self.trace.append((x, y))
-		self.x = x
-		self.y = y
 		
-	def setPrediction(self, x, y):
-		self.predTrace.append((x, y))
-		self.predX = x
-		self.predY = y
+		self.x = x
+		self.y = y
+		self.trace = []
 
 	def getPosition(self):
 		"""Return the position of this node"""
 		return (self.x, self.y)
 	
-	def getPredictedPosition(self):
-		return (self.predX, self.predY)
-
+	def setPosition(self, x, y):
+		"""Set the position of a node"""
+		self.x = x
+		self.y = y
+	
 	def getDistance(self, x, y):
 		"""Get the distance between this node and a specific point"""
 		return math.sqrt(math.pow((x - self.x),2) + math.pow((y - self.y),2))
 
-class BouncingNode(Node):
+class MovingNode(Node, metaclass=ABCMeta):
+	""" Node that moves
+	
+	Keeps track of all previous positions. Must be extended by
+	implementing a move method.
+	"""
+
+	def __init__(self, x = 0, y = 0):
+		super().__init__(x,y)
+		self.predX = x
+		self.predY = y
+		self.trace = [(x,y)]
+		
+	@abstractmethod
+	def move(self):
+		pass
+	
+	def moveToPosition(self, x, y):
+		"""Move the node to a position"""
+		self.trace.append((x, y))
+		self.x = x
+		self.y = y
+	
+class BouncingNode(MovingNode):
 	""" Simple bouncing node within some box
 	
 	Arguments:
@@ -64,7 +68,7 @@ class BouncingNode(Node):
 		s: Speed
 	"""	
 	
-	def __init__(self, x = 0, y = 0, maxX = 100, maxY = 100):
+	def __init__(self, maxX = 100, maxY = 100, x = 0, y = 0, ):
 		super().__init__(x, y)
 
 		self.maxX = maxX
@@ -81,9 +85,8 @@ class BouncingNode(Node):
 		yn = max(min(self.y + math.sin(self.r) * self.s, self.maxY), 0)
 		
 		if xn == 0 or xn == self.maxX:
-			#self.r -= math.pi
 			self.r = math.pi - self.r
 		elif yn == 0 or yn == self.maxY:
 			self.r = 2 * math.pi - self.r
 		
-		self.setPosition(xn, yn)
+		self.moveToPosition(xn, yn)

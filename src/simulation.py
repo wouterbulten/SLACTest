@@ -13,7 +13,7 @@ config = {
 # Create a new world
 world = env.World(config['xMax'], config['yMax'])
 # Instantiate nodes with a random position
-nodes = [wsn.WirelessNode(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['nNodes'])]
+nodes = [wsn.MovingAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['nNodes'])]
 # Create a network controller, containing the world and nodes
 controller = contr.NetworkController(world, nodes)
 # Initialize the world, gives nodes initial speed and direction

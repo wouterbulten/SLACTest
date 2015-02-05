@@ -57,7 +57,7 @@ class NetworkAnimation(animation.TimedAnimation):
         self.network.iterate();
         
         x,y = zip(*[n.getPosition() for n in self.network.nodes])
-        xPred,yPred = zip(*[n.getPredictedPosition() for n in self.network.nodes])
+        xPred,yPred = zip(*[(50,50) for n in self.network.nodes])
 
         self.nodesPlt.set_data(x,y)
         self.predPlt.set_data(xPred,yPred)
