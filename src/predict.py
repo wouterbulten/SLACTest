@@ -1,16 +1,20 @@
+'''
+Created on Feb 5, 2015
+
+@author: wouterbulten
+'''
 import network.wireless as wsn
 import environment.world as env
 import simulation.controllers as contr
 from predictor.probabilistic import predict
-import simulation.animation as anim
 import numpy as np
 
 config = {
-	
-	#'movingNodes':	1,
-	'fixedNodes':	10,
-	'xMax':		100,
-	'yMax':		100,
+    
+    #'movingNodes':    1,
+    'fixedNodes':    2,
+    'xMax':        25,
+    'yMax':        25,
 }
 
 # Create a new world
@@ -26,7 +30,15 @@ controller = contr.NetworkController(world, nodes)
 # Initialize the world, gives nodes initial speed and direction
 controller.initialize()
 
-# Create a controller for the visualization
-animation = anim.NetworkAnimation(controller)
-# Start
-animation.show()
+X = np.array([n.getSignalStrengthAtLocation(*user.getPosition()) for n in nodes if n != user])
+
+for i in range(0, 100):
+    
+    # Update the total network
+    controller.iterate()
+    
+    # Get RSSI measurements
+    rssi = [n.getSignalStrengthAtLocation(*user.getPosition()) for n in nodes if n != user]
+    X = np.vstack((X, rssi))
+
+print(X)
