@@ -1,8 +1,8 @@
-import network.wireless as wsn
-import environment.world as env
-import simulation.controllers as contr
-from predictor.probabilistic import predict
-import simulation.animation as anim
+import SLAC.network.wireless as wsn
+import SLAC.environment.world as env
+import SLAC.simulation.controllers as contr
+from SLAC.predictor.probabilistic import predict
+import SLAC.simulation.animation as anim
 import numpy as np
 
 config = {

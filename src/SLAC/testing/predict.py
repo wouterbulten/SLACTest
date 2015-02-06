@@ -3,16 +3,17 @@ Created on Feb 5, 2015
 
 @author: wouterbulten
 '''
-import network.wireless as wsn
-import environment.world as env
-import simulation.controllers as contr
-from predictor.probabilistic import predict
+import SLAC.network.wireless as wsn
+import SLAC.environment.world as env
+import SLAC.simulation.controllers as contr
+from SLAC.predictor.probabilistic import predict
 import numpy as np
+import SLAC.predictor.gplvm as gplvm
 
 config = {
     
     #'movingNodes':    1,
-    'fixedNodes':    2,
+    'fixedNodes':    200,
     'xMax':        25,
     'yMax':        25,
 }
@@ -30,15 +31,20 @@ controller = contr.NetworkController(world, nodes)
 # Initialize the world, gives nodes initial speed and direction
 controller.initialize()
 
-X = np.array([n.getSignalStrengthAtLocation(*user.getPosition()) for n in nodes if n != user])
+Y = np.array([n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n in nodes if n != user])
 
-for i in range(0, 100):
+# Simulate movement in the network
+for i in range(0, 500):
     
     # Update the total network
     controller.iterate()
     
     # Get RSSI measurements
-    rssi = [n.getSignalStrengthAtLocation(*user.getPosition()) for n in nodes if n != user]
-    X = np.vstack((X, rssi))
+    rssi = [n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n in nodes if n != user]
+    Y = np.vstack((Y, rssi))
 
-print(X)
+print(Y)
+gpLVM = gplvm.GPLVM(Y,2)
+gpLVM.learn(1)
+
+print(gpLVM.gp.X)
