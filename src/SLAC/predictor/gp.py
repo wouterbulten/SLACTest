@@ -74,7 +74,7 @@ class GP:
         
     def ll(self,params=None):
         """  A cost function to optimise for setting the kernel parameters. Uses current parameter values if none are passed """
-        if not params == None:
+        if not params is None:
             self.set_params(params)
         try:
             self.update()
@@ -84,7 +84,7 @@ class GP:
         
     def ll_grad(self,params=None):
         """ the gradient of the ll function, for use with conjugate gradient optimisation. uses current values of parameters if none are passed """
-        if not params == None:
+        if not params is None:
             self.set_params(params)
         try:
             self.update()
