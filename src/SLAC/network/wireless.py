@@ -4,7 +4,7 @@ Created on Feb 4, 2015
 @author: wouterbulten
 '''
 import math
-from network.nodes import Node, BouncingNode
+from SLAC.network.nodes import Node, BouncingNode
 from abc import ABCMeta, abstractmethod
 import numpy as  np
 
@@ -54,9 +54,9 @@ class WirelessEntity(metaclass=ABCMeta):
     def getDistance(self, x, y):
         pass
     
-    def getSignalStrengthAtLocation(self, x, y):
+    def getSignalStrengthAtLocation(self, x, y, noise = 1):
         """Return the signal strength of this node at a particular position"""
-        return RSSI(self.getDistance(x,y), self.n, self.txPower)
+        return RSSI(self.getDistance(x,y), self.n, self.txPower, noise)
 
 class FixedAP(WirelessEntity, Node):
     """ Non-moving access point
