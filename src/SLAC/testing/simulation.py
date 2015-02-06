@@ -9,8 +9,8 @@ config = {
 	
 	#'movingNodes':	1,
 	'fixedNodes':	10,
-	'xMax':		100,
-	'yMax':		100,
+	'xMax':		25,
+	'yMax':		25,
 }
 
 # Create a new world

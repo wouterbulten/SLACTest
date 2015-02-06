@@ -8,9 +8,9 @@ https://github.com/jameshensman/pythonGPLVM
 '''
 import numpy as np
 import pylab
-import predictor.pca as pca
-import predictor.kernels as kernels
-import predictor.gp as gp
+import SLAC.predictor.pca as pca
+import SLAC.predictor.kernels as kernels
+import SLAC.predictor.gp as gp
 from scipy import optimize
 
 

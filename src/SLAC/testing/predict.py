@@ -3,17 +3,20 @@ Created on Feb 5, 2015
 
 @author: wouterbulten
 '''
+import matplotlib
+matplotlib.use('TKAgg')
 import SLAC.network.wireless as wsn
 import SLAC.environment.world as env
 import SLAC.simulation.controllers as contr
 from SLAC.predictor.probabilistic import predict
 import numpy as np
 import SLAC.predictor.gplvm as gplvm
+from SLAC.simulation.animation import PlaybackAnimation
 
 config = {
     
     #'movingNodes':    1,
-    'fixedNodes':    200,
+    'fixedNodes':    100,
     'xMax':        25,
     'yMax':        25,
 }
@@ -21,7 +24,8 @@ config = {
 # Create a new world
 world = env.World(config['xMax'], config['yMax'])
 # Instantiate nodes with a random position
-nodes = [wsn.MovingAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['fixedNodes'])]
+nodes = [wsn.FixedAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['fixedNodes'])]
+
 #nodes.extend([wsn.FixedAP(maxX = world.getMaxX(), maxY = world.getMaxY()) for x in range(0, config['movingNodes'])])
 user = wsn.MovingAP(maxX = world.getMaxX(), maxY = world.getMaxY())
 nodes.append(user)
@@ -34,7 +38,7 @@ controller.initialize()
 Y = np.array([n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n in nodes if n != user])
 
 # Simulate movement in the network
-for i in range(0, 500):
+for i in range(0, 100):
     
     # Update the total network
     controller.iterate()
@@ -43,8 +47,12 @@ for i in range(0, 500):
     rssi = [n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n in nodes if n != user]
     Y = np.vstack((Y, rssi))
 
-print(Y)
+
 gpLVM = gplvm.GPLVM(Y,2)
 gpLVM.learn(1)
 
-print(gpLVM.gp.X)
+predX, predY = zip(*gpLVM.gp.X)
+print(range(len(user.trace) - 2))
+# Create a animation
+anim = PlaybackAnimation(nodes[:-1], user, predX, predY)
+anim.show()
