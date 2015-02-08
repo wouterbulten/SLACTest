@@ -2,7 +2,11 @@
 
 To run the simulation:
 
-	python simulation.py
+	python src/simulation.py
+	
+To run the prediction
+
+	python src/predict.py
 	
 Requirements:
 
