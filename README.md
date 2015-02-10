@@ -14,6 +14,6 @@ Requirements:
 * Matplotlib
 * Numpy
 * Scipy
-* Python 3 (tested with 3.4)
+* Python 2
 
 Uses GP-LVM (Guassian Process Latent Variable Models) for localization.
