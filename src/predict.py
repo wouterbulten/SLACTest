@@ -10,6 +10,7 @@ import SLAC.environment.world as env
 import SLAC.simulation.controllers as contr
 import numpy as np
 from SLAC.simulation.animation import PlaybackAnimation
+import GPy as gp
 
 config = {
     
