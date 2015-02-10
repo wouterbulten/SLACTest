@@ -26,6 +26,10 @@ To run the prediction
 
 	python src/predict.py
 	
+## Example movies
+
+See _/examples_ for a collection of sample movies.
+
 ## Configuration
 
 The GP-LVM model can be tweaked. To enable custom configuration rename _.gpy_user.cfg.example_ to _.gpy_user.cfg_
