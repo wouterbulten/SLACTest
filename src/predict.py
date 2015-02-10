@@ -10,7 +10,7 @@ import SLAC.environment.world as env
 import SLAC.simulation.controllers as contr
 import numpy as np
 from SLAC.simulation.animation import PlaybackAnimation
-import GPy as gp
+from GPy.models.gplvm import GPLVM
 
 config = {
     
@@ -46,6 +46,8 @@ for i in range(0, 100):
     rssi = [n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n in nodes if n != user]
     Y = np.vstack((Y, rssi))
 
+
+gplvm = GPLVM(Y, 2, init='PCA')
 
 # Move the prediction to the starting point of the user (for the animation, does not change the accuracy)
 # predX = np.array(predX) + user.trace[0][0]
