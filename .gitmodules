@@ -1,4 +1,0 @@
-[submodule "lib/GPy"]
-	path = lib/GPy
-	url = https://wouterbulten@github.com/wouterbulten/GPy.git
-	branch = python3
