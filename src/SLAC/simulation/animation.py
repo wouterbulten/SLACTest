@@ -36,7 +36,7 @@ class PlaybackAnimation(animation.TimedAnimation):
         self.Xpred = Xpred
         self.Ypred = Ypred
 
-        super().__init__(fig, interval=100, blit=True, repeat=True, repeat_delay=500)
+        animation.TimedAnimation.__init__(self, fig, interval=100, blit=True, repeat=True, repeat_delay=500)
       
     def show(self):
         plt.show()
@@ -86,7 +86,7 @@ class NetworkAnimation(animation.TimedAnimation):
         self.iteration = 0
         self.network = networkController
 
-        super().__init__(fig, interval=interval, blit=True)
+        animation.TimedAnimation.__init__(self, fig, interval=interval, blit=True)
       
     def show(self):
         plt.show()
