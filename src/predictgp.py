@@ -9,8 +9,8 @@ import SLAC.network.wireless as wsn
 import SLAC.environment.world as env
 import SLAC.simulation.controllers as contr
 import numpy as np
+import SLAC.predictor.gplvm as gplvm
 from SLAC.simulation.animation import PlaybackAnimation
-import GPy as gp
 
 config = {
     
@@ -47,10 +47,18 @@ for i in range(0, 100):
     Y = np.vstack((Y, rssi))
 
 
+gpLVM = gplvm.GPLVM(Y,2)
+gpLVM.learn(1)
+
+predX, predY = zip(*gpLVM.gp.X)
+
 # Move the prediction to the starting point of the user (for the animation, does not change the accuracy)
-# predX = np.array(predX) + user.trace[0][0]
-# predY = np.array(predY) + user.trace[0][1]
+predX = np.array(predX) + user.trace[0][0]
+predY = np.array(predY) + user.trace[0][1]
+print(predX)
+print(predY)
+print(user.trace[0])
 
 # Create a animation
-# anim = PlaybackAnimation(nodes[:-1], user, predX, predY)
-# anim.show()
+anim = PlaybackAnimation(nodes[:-1], user, predX, predY)
+anim.show()

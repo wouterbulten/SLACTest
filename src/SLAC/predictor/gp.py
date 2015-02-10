@@ -8,7 +8,7 @@ https://github.com/jameshensman/pythonGPLVM
 '''
 
 import numpy as np
-import SLAC.predictor.kernels as kernels
+from . import kernels as kernels
 from scipy.optimize import fmin, fmin_ncg, fmin_cg
 from scipy import linalg
 

@@ -10,6 +10,7 @@ To run the prediction
 	
 Requirements:
 
+* GPy
 * Matplotlib
 * Numpy
 * Scipy

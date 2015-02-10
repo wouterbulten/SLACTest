@@ -4,7 +4,7 @@ Created on Feb 4, 2015
 @author: wouterbulten
 '''
 import matplotlib
-from SLAC.network.wireless import MovingAP
+from ..network.wireless import MovingAP
 matplotlib.use('TKAgg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
