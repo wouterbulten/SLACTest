@@ -6,9 +6,9 @@ import math
 
 class Controller(object):
 
-	def __init__(self):
+	def __init__(self, outputEnabled = True):
 		self.iteration = 0
-		self.outputEnabled = True
+		self.outputEnabled = outputEnabled
 
 	def iterate(self):
 		self.iteration += 1
@@ -23,9 +23,9 @@ class Controller(object):
 
 class NetworkController(Controller):
 
-	def __init__(self, world, nodes):
+	def __init__(self, world, nodes, outputEnabled = True):
 
-		Controller.__init__(self)
+		Controller.__init__(self, outputEnabled)
 
 		self.world = world
 		self.nodes = nodes

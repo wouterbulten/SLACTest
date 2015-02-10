@@ -30,3 +30,8 @@ controller.initialize()
 animation = anim.NetworkAnimation(controller)
 # Start
 animation.show()
+
+import time
+import datetime
+st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d%H%M%S')
+animation.save("sim_" + st + ".mp4", writer="ffmpeg")

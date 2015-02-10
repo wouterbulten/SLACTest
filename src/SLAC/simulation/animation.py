@@ -16,33 +16,37 @@ class PlaybackAnimation(animation.TimedAnimation):
     '''
     def __init__(self, nodes, user, Xpred, Ypred):
                         
-        fig = plt.figure()
-        combAx = fig.add_subplot(1,1,1)
-        self.nodesPlt, = plt.plot([], [], 'ro')
-        self.userPlt, = plt.plot([], [], 'bo')
-        self.predPlt, = plt.plot([], [], 'wo')
+        fig, (combAx, predAx) = plt.subplots(1, 2, sharey=True, squeeze=True)
 
-        combAx.add_line(self.nodesPlt)
-        combAx.add_line(self.predPlt)
-        combAx.add_line(self.userPlt)
+        self.nodesPlt, = combAx.plot([], [], 'ro')
+        self.userPlt, = combAx.plot([], [], 'bo')
+        self.predPlt, = predAx.plot([], [], 'wo')
+        self.tracePlt, = combAx.plot([], [], 'b-')
+        self.tracePredPlt, = predAx.plot([], [], 'k-')
+
         combAx.set_xlabel('X')
         combAx.set_ylabel('Y')
         combAx.set_xlim(0, 25)
         combAx.set_ylim(0, 25)
         
+        predAx.set_xlabel('X')
+        predAx.set_ylabel('Y')
+        predAx.set_xlim(0, 25)
+        predAx.set_ylim(0, 25)
+                
         self.iteration = 0
         self.nodes = nodes
         self.user = user
         self.Xpred = Xpred
         self.Ypred = Ypred
 
-        animation.TimedAnimation.__init__(self, fig, interval=100, blit=True, repeat=True, repeat_delay=500)
+        animation.TimedAnimation.__init__(self, fig, interval=100, blit=True, repeat=False, repeat_delay=500)
       
     def show(self):
         plt.show()
           
     def _draw_frame(self, iteration):
-                
+
         # Plot the nodes
         x,y = zip(*[n.trace[iteration] if isinstance(n, MovingAP) else n.getPosition() for n in self.nodes])
         self.nodesPlt.set_data(x,y)
@@ -51,20 +55,35 @@ class PlaybackAnimation(animation.TimedAnimation):
         x,y = self.user.trace[iteration]
         self.userPlt.set_data([x], [y])
         
+        # Plot the user trace
+        xTrace, yTrace = self.tracePlt.get_data()
+        xTrace.append(x)
+        yTrace.append(y)
+        self.tracePlt.set_data(xTrace, yTrace)
+        
         # Plot the prediction
         x = self.Xpred[iteration]
         y = self.Ypred[iteration]
         self.predPlt.set_data([x], [y])
+        
+        # Plot the predicted trace
+        xTrace, yTrace = self.tracePredPlt.get_data()
+        xTrace.append(x)
+        yTrace.append(y)
+        self.tracePredPlt.set_data(xTrace, yTrace)
                 
-        self._drawn_artists = [self.predPlt, self.nodesPlt, self.userPlt]
+        self._drawn_artists = [self.predPlt, 
+            self.nodesPlt, self.userPlt, self.tracePlt, self.tracePredPlt]
         
     def _init_draw(self):
         self.nodesPlt.set_data([], [])
         self.userPlt.set_data([], [])
         self.predPlt.set_data([], [])
+        self.tracePlt.set_data([], [])
+        self.tracePredPlt.set_data([], [])
         
     def new_frame_seq(self):
-        self.iteration = 0 #reset the itera
+        self.iteration = 0 #reset the iterations
         return iter(range(len(self.user.trace) - 2))
     
 class NetworkAnimation(animation.TimedAnimation):

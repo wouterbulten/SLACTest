@@ -30,14 +30,15 @@ user = wsn.MovingAP(maxX = world.getMaxX(), maxY = world.getMaxY())
 nodes.append(user)
 
 # Create a network controller, containing the world and nodes
-controller = contr.NetworkController(world, nodes)
+controller = contr.NetworkController(world, nodes, False)
 # Initialize the world, gives nodes initial speed and direction
 controller.initialize()
 
 Y = np.array([n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n in nodes if n != user])
 
 # Simulate movement in the network
-for i in range(0, 100):
+print("Simulating movement")
+for i in range(0, 1000):
     
     # Update the total network
     controller.iterate()
@@ -47,12 +48,22 @@ for i in range(0, 100):
     Y = np.vstack((Y, rssi))
 
 
+# Create GPLVM
 gplvm = GPLVM(Y, 2, init='PCA')
+print("Running optimisation")
+gplvm.optimize(messages=True, max_iters = 500, max_f_eval = 500)#, optimizer = 'scg')
+
+predX, predY = zip(*gplvm.X)
 
 # Move the prediction to the starting point of the user (for the animation, does not change the accuracy)
-# predX = np.array(predX) + user.trace[0][0]
-# predY = np.array(predY) + user.trace[0][1]
+predX = np.array(predX) + user.trace[0][0]
+predY = np.array(predY) + user.trace[0][1]
 
 # Create a animation
-# anim = PlaybackAnimation(nodes[:-1], user, predX, predY)
-# anim.show()
+anim = PlaybackAnimation(nodes[:-1], user, predX, predY)
+anim.show()
+
+import time
+import datetime
+st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d%H%M%S')
+anim.save("sim_" + st + ".mp4", writer="ffmpeg")
