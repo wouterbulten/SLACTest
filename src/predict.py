@@ -38,7 +38,7 @@ Y = np.array([n.getSignalStrengthAtLocation(*user.getPosition(), noise=0) for n 
 
 # Simulate movement in the network
 print("Simulating movement")
-for i in range(0, 1000):
+for i in range(0, 500):
     
     # Update the total network
     controller.iterate()

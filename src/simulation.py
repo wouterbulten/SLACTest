@@ -1,7 +1,6 @@
 import SLAC.network.wireless as wsn
 import SLAC.environment.world as env
 import SLAC.simulation.controllers as contr
-from SLAC.predictor.probabilistic import predict
 import SLAC.simulation.animation as anim
 import numpy as np
 
@@ -31,7 +30,7 @@ animation = anim.NetworkAnimation(controller)
 # Start
 animation.show()
 
-import time
-import datetime
-st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d%H%M%S')
-animation.save("sim_" + st + ".mp4", writer="ffmpeg")
+#import time
+#import datetime
+#st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d%H%M%S')
+#animation.save("sim_" + st + ".mp4", writer="ffmpeg")

@@ -15,8 +15,8 @@ class PlaybackAnimation(animation.TimedAnimation):
     Animator object
     '''
     def __init__(self, nodes, user, Xpred, Ypred):
-                        
-        fig, (combAx, predAx) = plt.subplots(1, 2, sharey=True, squeeze=True)
+                      
+        fig, (combAx, predAx) = plt.subplots(1, 2, squeeze=True, figsize=(24,10)  )
 
         self.nodesPlt, = combAx.plot([], [], 'ro')
         self.userPlt, = combAx.plot([], [], 'bo')
@@ -31,8 +31,8 @@ class PlaybackAnimation(animation.TimedAnimation):
         
         predAx.set_xlabel('X')
         predAx.set_ylabel('Y')
-        predAx.set_xlim(0, 25)
-        predAx.set_ylim(0, 25)
+        predAx.set_xlim(round(min(Xpred)), round(max(Xpred)))
+        predAx.set_ylim(round(min(Ypred)), round(max(Ypred)))
                 
         self.iteration = 0
         self.nodes = nodes
