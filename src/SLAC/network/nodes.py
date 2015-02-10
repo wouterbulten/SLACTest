@@ -5,7 +5,7 @@ import math
 import numpy as np
 from abc import ABCMeta, abstractmethod
 
-class Node(object, metaclass=ABCMeta):
+class Node(object):
 	"""Base Node
 
 	Arguments:
@@ -13,6 +13,8 @@ class Node(object, metaclass=ABCMeta):
 		y: Current y position
 	"""	
 
+	__metaclass__ = ABCMeta
+	
 	def __init__(self, x = 0, y = 0):
 		
 		self.x = x
@@ -40,15 +42,16 @@ class Node(object, metaclass=ABCMeta):
 		"""Get the distance between this node and a specific point"""
 		return math.sqrt(math.pow((x - self.x),2) + math.pow((y - self.y),2))
 
-class MovingNode(Node, metaclass=ABCMeta):
+class MovingNode(Node):
 	""" Node that moves
 	
 	Keeps track of all previous positions. Must be extended by
 	implementing a move method.
 	"""
-
+	__metaclass__ = ABCMeta
+	
 	def __init__(self, x = 0, y = 0):
-		super().__init__(x,y)
+		Node.__init__(self, x, y)
 		self.predX = x
 		self.predY = y
 		self.trace = [(x,y)]
@@ -82,7 +85,7 @@ class BouncingNode(MovingNode):
 	"""	
 	
 	def __init__(self, maxX = 100, maxY = 100, x = 0, y = 0, ):
-		super().__init__(x, y)
+		MovingNode.__init__(self, x, y)
 
 		self.maxX = maxX
 		self.maxY = maxY
@@ -95,7 +98,7 @@ class BouncingNode(MovingNode):
 
 	def initialize(self, x, y):
 		"""Set random movement"""
-		super().initialize(x, y)
+		MovingNode.initialize(self, x, y)
 		
 		r = (2 * np.random.random()) * math.pi
 		s = (2 * np.random.random()) + 0.1

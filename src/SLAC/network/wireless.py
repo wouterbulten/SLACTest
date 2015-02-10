@@ -36,7 +36,7 @@ def plotAccessPoint(node, xDim, yDim, precission):
     
     plt.show()
     
-class WirelessEntity(metaclass=ABCMeta):
+class WirelessEntity():
     """
     Wireless entity
     
@@ -44,6 +44,8 @@ class WirelessEntity(metaclass=ABCMeta):
         txPower: Transmitting power at 1 m
         n: Signal propagation constant
     """
+    
+    __metaclass__ = ABCMeta
     
     def __init__(self, txPower = -59, n = 2):
 

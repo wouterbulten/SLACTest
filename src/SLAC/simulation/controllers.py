@@ -37,7 +37,7 @@ class NetworkController(Controller):
 			n.initialize(*self.world.getRandomPosition())
 		
 	def iterate(self):
-		super().iterate()
+		Controller.iterate(self)
 
 		for n in self.nodes:
 			n.iterate()
