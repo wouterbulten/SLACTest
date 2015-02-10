@@ -52,7 +52,14 @@ gpLVM = gplvm.GPLVM(Y,2)
 gpLVM.learn(1)
 
 predX, predY = zip(*gpLVM.gp.X)
-print(range(len(user.trace) - 2))
+
+# Move the prediction to the starting point of the user (for the animation, does not change the accuracy)
+predX = np.array(predX) + user.trace[0][0]
+predY = np.array(predY) + user.trace[0][1]
+print(predX)
+print(predY)
+print(user.trace[0])
+
 # Create a animation
 anim = PlaybackAnimation(nodes[:-1], user, predX, predY)
 anim.show()

@@ -53,6 +53,10 @@ class MovingNode(Node, metaclass=ABCMeta):
 		self.predY = y
 		self.trace = [(x,y)]
 		
+	def initialize(self, x, y):
+		self.trace = [(x,y)]
+		Node.initialize(self, x, y)
+		
 	@abstractmethod
 	def move(self):
 		pass
