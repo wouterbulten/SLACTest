@@ -35,6 +35,25 @@ def plotAccessPoint(node, xDim, yDim, precission):
             linewidth=0, antialiased=True)
     
     plt.show()
+
+def plotAPStrengthFromTrace(trace, node):
+    """Plot the signal strength of an access point given a trace"""
+    from mpl_toolkits.mplot3d import Axes3D  # @UnresolvedImport
+    from mpl_toolkits.mplot3d import axes3d  # @UnresolvedImport
+    from matplotlib import cm
+    import matplotlib.pyplot as plt
+    
+    X, Y = zip(*trace)
+    
+    Z = np.array([node.getSignalStrengthAtLocation(*t) for t in trace])
+    X,Y = np.meshgrid(X,Y, indexing='ij')
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    
+    ax.plot_surface(X, Y, Z, cmap=cm.coolwarm) # @UndefinedVariable
+    
+    plt.show()  
     
 class WirelessEntity():
     """
