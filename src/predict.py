@@ -22,7 +22,7 @@ try:
     user = simData['user']
     nodes = simData['nodes']
 except IOError:
-    print("ERROR: First run generateData.py to generate a data file")
+    print("ERROR: Missing data file. First run generateData.py to generate a data file.")
     exit()
     
 # Create GPLVM

@@ -18,11 +18,11 @@ All of these can be installed using _pip_:
 
 ## Running the examples
 
-To run the simulation:
+To run the GP-LVM prediction first generate a data file:
 
-	python src/simulation.py
+	python src/generateData.py
 	
-To run the prediction
+This generates a numpy data file containing a network simulation. Now you can run the prediction algorithm:
 
 	python src/predict.py
 	
