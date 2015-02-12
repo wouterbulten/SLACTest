@@ -7,6 +7,7 @@
 * 25x25 world
 * 500 movement steps
 * 500 iterations optimize
+* No noise (sd = 0)
 
 ## sim_20150210171308.mp4
 
@@ -15,6 +16,7 @@
 * 25x25 world
 * 500 movement steps
 * 500 iterations optimize
+* No noise (sd = 0)
 
 ## sim_20150210172159.mp4
 
@@ -25,6 +27,7 @@ Example of the GP-LVM model performing well.
 * 25x25 world
 * 500 movement steps
 * 500 iterations optimize
+* No noise (sd = 0)
 
 ## sim_20150211095303.mp4
 
@@ -32,6 +35,7 @@ Example of the GP-LVM model performing well.
 * 100 fixed nodes, 1 moving
 * 25x25 world
 * 500 movement steps
+* No noise (sd = 0)
 
 ## sim_20150211105105.mp4
 
@@ -41,6 +45,7 @@ Example showing a sparse input (less nodes) results in a decrease in localizatio
 * 10 fixed nodes, 1 moving
 * 25x25 world
 * 500 movement steps
+* No noise (sd = 0)
 
 ## sim_20150211111857.mp4
 
@@ -48,6 +53,7 @@ Example showing a sparse input (less nodes) results in a decrease in localizatio
 * 400 fixed nodes, 1 moving
 * 25x25 world
 * 500 movement steps
+* No noise (sd = 0)
 
 ## sim_20150211112107.mp4
 
@@ -55,3 +61,4 @@ Example showing a sparse input (less nodes) results in a decrease in localizatio
 * 1000 fixed nodes, 1 moving
 * 25x25 world
 * 500 movement steps
+* No noise (sd = 0)
