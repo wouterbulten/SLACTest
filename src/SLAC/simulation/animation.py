@@ -31,8 +31,12 @@ class PlaybackAnimation(animation.TimedAnimation):
         
         predAx.set_xlabel('X')
         predAx.set_ylabel('Y')
-        predAx.set_xlim(round(min(Xpred)), round(max(Xpred)))
-        predAx.set_ylim(round(min(Ypred)), round(max(Ypred)))
+        
+        xLimMin = round(min(min(Xpred), min(Ypred)))
+        xLimMax = round(max(max(Xpred), max(Ypred)))
+        
+        predAx.set_xlim(xLimMin, xLimMax)
+        predAx.set_ylim(xLimMin, xLimMax)
                 
         self.iteration = 0
         self.nodes = nodes

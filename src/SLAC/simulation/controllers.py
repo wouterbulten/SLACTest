@@ -8,7 +8,7 @@ import SLAC.environment.world as env
 
 def generateData(xMax = 25, yMax = 25, fixedNodes = 25, noise = 2, steps = 500):
 	'''
-	Simulates an environment and returns Y and user
+	Simulates an environment and returns Y, user and nodes
 	
 	:param xMax: max world size x
 	:param yMax: max wolrd size y
@@ -41,7 +41,7 @@ def generateData(xMax = 25, yMax = 25, fixedNodes = 25, noise = 2, steps = 500):
 		rssi = [n.getSignalStrengthAtLocation(*user.getPosition(), noise=noise) for n in nodes if n != user]
 		Y = np.vstack((Y, rssi))
 		
-	return (Y, user)
+	return (Y, user, nodes)
 
 class Controller(object):
 

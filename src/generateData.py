@@ -11,8 +11,10 @@ matplotlib.use('TKAgg')
 import SLAC.simulation.controllers as contr
 import numpy as np
 
-Y, user = contr.generateData(25, 25, 25, 2, 500)
+Y, user, nodes = contr.generateData(25, 25, 25, 2, 500)
 
-np.save('simulation_data', {'Y': Y, 'user': user})
+data = {'Y': Y, 'user': user, 'nodes': nodes}
+
+np.save('simulation_data.npy', data)
 
 print("Data saved")
