@@ -14,10 +14,11 @@ class PlaybackAnimation(animation.TimedAnimation):
     '''
     Animator object
     '''
-    def __init__(self, nodes, user, Xpred, Ypred):
+    def __init__(self, nodes, user, Xpred, Ypred, title = ''):
                       
         fig, (combAx, predAx) = plt.subplots(1, 2, squeeze=True, figsize=(24,10)  )
-
+        fig.suptitle(title)
+        
         self.nodesPlt, = combAx.plot([], [], 'ro')
         self.userPlt, = combAx.plot([], [], 'bo')
         self.predPlt, = predAx.plot([], [], 'wo')

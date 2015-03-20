@@ -14,7 +14,11 @@ def RSSIraw(dist, n, txPower):
 
 def RSSI(dist, n, txPower, sd = 1):
     """RSSI with gaussian noise N(0,sd)"""
-    return RSSIraw(dist, n, txPower) + np.random.normal(0, n)
+    raw = RSSIraw(dist, n, txPower) + (np.random.normal(0, sd) if sd > 0 else 0)
+    if(raw < -100):
+        raw = 0
+        
+    return raw
 
 def plotAccessPoint(node, xDim, yDim, precission):
     """Plot the signal strength of an access point"""
